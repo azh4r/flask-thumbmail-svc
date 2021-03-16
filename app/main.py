@@ -5,10 +5,8 @@ import os
 from werkzeug.utils import secure_filename
 import uuid
 import logging
+from . import config
 
-
-UPLOAD_FOLDER = 'input-images'
-RESULT_FOLDER = 'preview-images'
 logger = logging.getLogger(__name__)
 
 
@@ -29,7 +27,7 @@ def task_processing(filename):
 
 @app.route('/result/<filename>')
 def send_image(filename):
-    return send_from_directory(os.path.abspath(os.path.join(os.getcwd(), os.pardir, 'flask-celery-pregen',RESULT_FOLDER)), filename)
+    return send_from_directory(os.path.abspath(os.path.join(os.getcwd(), os.pardir,config.RESULT_FOLDER)), filename)
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -42,12 +40,12 @@ def upload():
 
         file = request.files['file']
         path = os.path.abspath(os.path.join(
-            os.getcwd(), os.pardir, UPLOAD_FOLDER, secure_filename(file.filename)))
+            os.getcwd(), os.pardir, config.UPLOAD_FOLDER, secure_filename(file.filename)))
         filename, file_extension = os.path.splitext(path)
 
         # Set the uploaded file a uuid name
         filename_uuid = str(uuid.uuid4()) + file_extension
-        path_uuid = os.path.abspath(os.path.join(os.getcwd(), os.pardir, 'flask-celery-pregen', UPLOAD_FOLDER, filename_uuid))
+        path_uuid = os.path.abspath(os.path.join(os.getcwd(), os.pardir, config.UPLOAD_FOLDER, filename_uuid))
 
         file.save(path_uuid)
         logger.info(f'the file {file.filename} has been successfully saved as {filename_uuid}')

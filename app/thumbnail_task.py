@@ -1,18 +1,17 @@
 from PIL import Image
 from celery import Celery
 import os
+from . import config
 
-celery = Celery(broker='redis://localhost:6379/0',backend='redis://localhost:6379/0')
-
-cache_path = 'preview-images'
+celery = Celery(broker=config.BROKER,backend=config.BACKEND)
 
 @celery.task(name='image.processing')
 def generate_thumbnail(filename):
     path = os.path.abspath(os.path.join(
-           os.getcwd(), os.pardir, 'flask-celery-pregen','input-images', filename))
+           os.getcwd(), os.pardir, config.UPLOAD_FOLDER, filename))
     image = Image.open(path)
     file_path = os.path.abspath(os.path.join(
-            os.getcwd(), os.pardir, 'flask-celery-pregen','preview-images', filename))
+            os.getcwd(), os.pardir, config.RESULT_FOLDER, filename))
     image.thumbnail((180,180))
     image.save(file_path)
     return filename
