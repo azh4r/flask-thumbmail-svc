@@ -24,7 +24,6 @@ def task_processing(filename):
     task = thumbnail_task.generate_thumbnail.delay(filename)
     async_result = AsyncResult(id=task.task_id, app=thumbnail_task.celery)
     processing_result = async_result.get()
-    print('hello am here')
     return render_template('result.html', image_name=processing_result)
 
 
@@ -42,11 +41,6 @@ def upload():
             return render_template('exception.html', text=msg)
 
         file = request.files['file']
-        # if file and not allowed_file(file.filename):
-            # msg = f'the file {file.filename} has wrong extention'
-            # logger.error(msg)
-            # return render_template('exception.html', text=msg)
-
         path = os.path.abspath(os.path.join(
             os.getcwd(), os.pardir, UPLOAD_FOLDER, secure_filename(file.filename)))
         filename, file_extension = os.path.splitext(path)
