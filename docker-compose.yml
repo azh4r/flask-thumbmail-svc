@@ -1,10 +1,45 @@
 version: '3.4'
 
 services:
+  redis:
+    image: redis:latest
+    hostname: redis
+
   flaskcelerypregen:
     image: flaskcelerypregen
     build:
       context: .
       dockerfile: ./Dockerfile
+    command: ./scripts/run_server.sh
+    volumes:
+      - .:/flask-celery-pregen
     ports:
-      - 5000:5000
+      - "5000:5000"
+    links:
+      - redis
+
+  # web:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   hostname: web
+  #   command: ./scripts/run_server.sh
+  #   volumes:
+  #     - .:/appdir
+  #   ports:
+  #     - "5000:5000"
+  #   links:
+  #     - redis
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ./scripts/run_celery.sh
+    volumes:
+      - .:/flask-celery-pregen
+    links:
+      - redis
+    environment:
+        - CELERY_BROKER=redis://redis:6379/0
+        - CELERY_BACKEND=redis://redis:6379/0
