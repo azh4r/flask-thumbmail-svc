@@ -1,15 +1,21 @@
-from preview_generator.manager import PreviewManager
+from PIL import Image
 from celery import Celery
+import os
 
-celery = Celery(broker='redis://localhost:6379/0')
+celery = Celery(broker='redis://localhost:6379/0',backend='redis://localhost:6379/0')
 
 cache_path = 'preview-images'
 
 @celery.task(name='image.processing')
-def generate_thumbnail(file_to_preview_path):
-
-    manager = PreviewManager(cache_path, create_folder= True)
-    path_to_preview_image = manager.get_jpeg_preview(file_to_preview_path)
+def generate_thumbnail(filename):
+    path = os.path.abspath(os.path.join(
+           os.getcwd(), os.pardir, 'flask-celery-pregen_copy','input-images', filename))
+    image = Image.open(path)
+    file_path = os.path.abspath(os.path.join(
+            os.getcwd(), os.pardir, 'flask-celery-pregen_copy','preview-images', filename))
+    image.thumbnail((180,180))
+    image.save(file_path)
+    return filename
 
 if __name__ == "__main__":
     generate_thumbnail('input-images/painting_image1.jpg')
