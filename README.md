@@ -5,7 +5,7 @@ A Flask Celery Redis based webservice to converting images into 100x100 thumbnai
 To run:
 
 1. Clone the repository to your local:  
-    `git clone https://github.com/azh4r/flask-thumbmail-svc.git`
+    `git clone https://github.com/azh4r/flask-thumbnail-svc.git`
 
 2. Change to the directoy where you cloned the app:  
     `cd flask-thumbnail-svc`
