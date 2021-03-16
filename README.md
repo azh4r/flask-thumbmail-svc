@@ -21,6 +21,8 @@ To run:
 The service is configured to run on:   
     http://0.0.0.0:5000
 
+or any other IP address from outside docker such as:  
+    http://127.0.0.1:5000 
 
 The App basically has 3 components:
 1. Flask front end to send / load a local image to the server
