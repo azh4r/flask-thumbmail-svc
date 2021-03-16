@@ -52,4 +52,4 @@ def upload():
         return redirect('/process/' + filename_uuid)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0")
