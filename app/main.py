@@ -36,7 +36,7 @@ def upload():
         if not request.files.get('file', None):
             msg = 'the request contains no file'
             logger.error(msg)
-            return render_template('exception.html', text=msg)
+            return render_template('error.html', text=msg)
 
         file = request.files['file']
         path = os.path.abspath(os.path.join(

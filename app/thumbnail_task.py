@@ -2,6 +2,7 @@ from PIL import Image
 from celery import Celery
 import os
 from . import config
+import time
 
 celery = Celery(broker=config.BROKER,backend=config.BACKEND)
 
@@ -12,8 +13,9 @@ def generate_thumbnail(filename):
     image = Image.open(path)
     file_path = os.path.abspath(os.path.join(
             os.getcwd(), os.pardir, config.RESULT_FOLDER, filename))
-    image.thumbnail((180,180))
+    image.thumbnail((100,100))
     image.save(file_path)
+    # time.sleep(30)
     return filename
 
 if __name__ == "__main__":
