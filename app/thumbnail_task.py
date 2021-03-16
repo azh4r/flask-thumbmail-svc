@@ -9,10 +9,10 @@ cache_path = 'preview-images'
 @celery.task(name='image.processing')
 def generate_thumbnail(filename):
     path = os.path.abspath(os.path.join(
-           os.getcwd(), os.pardir, 'flask-celery-pregen_copy','input-images', filename))
+           os.getcwd(), os.pardir, 'flask-celery-pregen','input-images', filename))
     image = Image.open(path)
     file_path = os.path.abspath(os.path.join(
-            os.getcwd(), os.pardir, 'flask-celery-pregen_copy','preview-images', filename))
+            os.getcwd(), os.pardir, 'flask-celery-pregen','preview-images', filename))
     image.thumbnail((180,180))
     image.save(file_path)
     return filename
