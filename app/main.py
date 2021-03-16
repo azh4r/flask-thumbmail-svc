@@ -1,6 +1,4 @@
-from app.flask_celery import make_celery
 from flask import Flask, render_template, send_from_directory, request, redirect
-# from flask_restful import Api
 from . import thumbnail_task
 from celery.result import AsyncResult
 import os
@@ -15,8 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 app = Flask(__name__)
-# api = Api(app)
-celery = make_celery(app)
+
 
 @app.route('/')
 def index():
