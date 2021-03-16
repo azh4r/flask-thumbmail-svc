@@ -1,1 +1,4 @@
-<img src=" {{url_for('send_image', filename=image_name)}} ">
+{% extends "index.html" %}
+{% block image %}
+    <img src=" {{url_for("send_image", filename=image_name)}} ">
+{% endblock %}
