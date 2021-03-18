@@ -2,11 +2,12 @@
 
 A Flask Celery Redis based webservice to converting images into 100x100 thumbnails
 
-####Pre-requisites:  
+### Pre-requisites:  
+
     Make sure you have docker (version 20+) and docker-compose (version 1.27+) already installed.  
     If docker is configured to run with a local user you can drop sudo from the commands below. 
 
-####To run:
+### To run:
 
 1. Clone the repository to your local:  
     `git clone https://github.com/azh4r/flask-thumbnail-svc.git`
@@ -28,6 +29,8 @@ The service is configured to run on:
 or any other IP address from outside docker such as:  
     http://127.0.0.1:5000 
 
+### Architecture:
+
 The App basically has 3 components:
 1. Flask front end to send / load a local image to the server
 2. Redis key/value store to keep track of jobs, requests.
@@ -35,7 +38,7 @@ The App basically has 3 components:
 
 This enables long running processes to be executed asynchronously and multiple celery workers can be spawned to scale up in case of higher loads.
 
-####Testing:
+### Testing:
 
-For testing one can use pytest.  Testing has not been implemented yet but you can execute:  
+    For testing one can use pytest.  Testing has not been implemented yet but you can execute:  
     `sudo docker-compose exec flaskcelerypregen python -m pytest`
