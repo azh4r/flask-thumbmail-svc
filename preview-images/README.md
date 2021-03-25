@@ -1,1 +1,1 @@
-Output thumbnails are put in this directory
+Output thumbnails are put in this directory.
