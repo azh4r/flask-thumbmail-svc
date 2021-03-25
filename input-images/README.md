@@ -1,1 +1,1 @@
-Input images are loaded onto this directory
+Input images are loaded onto this directory.
