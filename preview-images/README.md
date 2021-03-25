@@ -1,0 +1,1 @@
+Output thumbnails are put in this directory
