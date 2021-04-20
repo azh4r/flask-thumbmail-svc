@@ -1,4 +1,5 @@
 from flask import Flask, render_template, send_from_directory, request, redirect
+from flask import jsonify
 from . import thumbnail_task
 from celery.result import AsyncResult
 import os
@@ -17,17 +18,23 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/process/<filename>')
+# @app.route('/process/<filename>')
 def task_processing(filename):
     task = thumbnail_task.generate_thumbnail.delay(filename)
     async_result = AsyncResult(id=task.task_id, app=thumbnail_task.celery)
-    processing_result = async_result.get()
-    return render_template('result.html', image_name=processing_result)
+    # processing_result = async_result.get()
+    async_result.wait()
+    return jsonify(async_result.status)
+    # return render_template('result.html', image_name=processing_result, upload_image=processing_result)
 
 
 @app.route('/result/<filename>')
 def send_image(filename):
     return send_from_directory(os.path.abspath(os.path.join(os.getcwd(), os.pardir,config.RESULT_FOLDER)), filename)
+
+@app.route('/result/<filename>')
+def upload_image(filename):
+    return send_from_directory(os.path.abspath(os.path.join(os.getcwd(), os.pardir,config.UPLOAD_FOLDER)), filename)
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -49,7 +56,9 @@ def upload():
 
         file.save(path_uuid)
         logger.info(f'the file {file.filename} has been successfully saved as {filename_uuid}')
-        return redirect('/process/' + filename_uuid)
+        # return redirect('/process/' + filename_uuid)
+        return task_processing(filename_uuid)
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0")
