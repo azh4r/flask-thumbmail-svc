@@ -22,11 +22,11 @@ def index():
 def task_processing(filename):
     task = thumbnail_task.generate_thumbnail.delay(filename)
     async_result = AsyncResult(id=task.task_id, app=thumbnail_task.celery)
-    # processing_result = async_result.get()
-    async_result.wait()
-    return jsonify(async_result.status)
-    # return render_template('result.html', image_name=processing_result, upload_image=processing_result)
-
+    processing_result = async_result.get()
+    if processing_result == True:
+        return jsonify(async_result.status), 201
+    else:
+        return jsonify(processing_result), 401
 
 @app.route('/result/<filename>')
 def send_image(filename):
@@ -43,7 +43,7 @@ def upload():
         if not request.files.get('file', None):
             msg = 'The request contains no file'
             logger.error(msg)
-            return jsonify({"message":msg}),401
+            return jsonify({"error":msg}),401
 
         file = request.files['file']
         path = os.path.abspath(os.path.join(
