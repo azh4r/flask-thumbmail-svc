@@ -28,13 +28,6 @@ def task_processing(filename):
     else:
         return jsonify(processing_result), 401
 
-@app.route('/result/<filename>')
-def send_image(filename):
-    return send_from_directory(os.path.abspath(os.path.join(os.getcwd(), os.pardir,config.RESULT_FOLDER)), filename)
-
-@app.route('/result/<filename>')
-def upload_image(filename):
-    return send_from_directory(os.path.abspath(os.path.join(os.getcwd(), os.pardir,config.UPLOAD_FOLDER)), filename)
 
 @app.route('/upload', methods=['POST'])
 def upload():
