@@ -41,9 +41,9 @@ def upload():
     """Upload file endpoint."""
     if request.method == 'POST':
         if not request.files.get('file', None):
-            msg = 'the request contains no file'
+            msg = 'The request contains no file'
             logger.error(msg)
-            return render_template('error.html', text=msg)
+            return jsonify({"message":msg}),401
 
         file = request.files['file']
         path = os.path.abspath(os.path.join(
