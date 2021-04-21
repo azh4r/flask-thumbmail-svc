@@ -38,7 +38,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/flask-celery-pregen
-    command: flower -A app.thumbnail_task.celery --port=5555 --broker=redis://redis:6379/0
+    command: flower -A app.resources.thumbnail_task.celery --port=5555 --broker=redis://redis:6379/0
     ports:
       - "5556:5555"
     environment:
