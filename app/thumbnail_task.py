@@ -20,7 +20,7 @@ def generate_thumbnail(filename):
     except (FileNotFoundError) as ex:
         return "File not found"
     except (UnidentifiedImageError) as ex:
-        return "Image type unidentified in file: ".join(filename)
+        return "Image type unidentified in file"
     # time.sleep(30)
     return True
 
