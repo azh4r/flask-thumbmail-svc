@@ -1,6 +1,7 @@
 version: '3.4'
 
 services:
+
   redis:
     image: redis:latest
     hostname: redis
@@ -18,19 +19,6 @@ services:
     links:
       - redis
 
-  # web:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   hostname: web
-  #   command: ./scripts/run_server.sh
-  #   volumes:
-  #     - .:/appdir
-  #   ports:
-  #     - "5000:5000"
-  #   links:
-  #     - redis
-
   worker:
     build:
       context: .
@@ -43,3 +31,21 @@ services:
     environment:
         - CELERY_BROKER=redis://redis:6379/0
         - CELERY_BACKEND=redis://redis:6379/0
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/flask-celery-pregen
+    command: flower -A app.thumbnail_task.celery --port=5555 --broker=redis://redis:6379/0
+    ports:
+      - "5556:5555"
+    environment:
+      - FLASK_DEBUG=1
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - flaskcelerypregen
+      - redis
+      - worker
