@@ -42,4 +42,4 @@ This enables long running processes to be executed asynchronously and multiple c
 
 For testing one can use pytest.  Testing has not been implemented yet but one can assert on whether the thumbnail_task can be run:
 
-`sudo docker-compose exec flaskcelerypregen python -m pytest`
+`docker-compose exec flaskcelerypregen python -m pytest`

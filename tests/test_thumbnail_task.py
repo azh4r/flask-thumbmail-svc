@@ -1,5 +1,4 @@
-from app import thumbnail_task
-from app.thumbnail_task import generate_thumbnail
+from app.resources.thumbnail_task import generate_thumbnail
 
 
 def test_generate_thumbnail():
