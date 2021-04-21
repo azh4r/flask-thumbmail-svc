@@ -15,7 +15,7 @@ def task_processing(filename):
     if processing_result == True:
         return {'message':'Successful task'}, 201
     else:
-        return {'message':processing_result}, 401
+        return {'error':processing_result}, 401
 
 
 class UploadImageResource(Resource):
@@ -23,7 +23,7 @@ class UploadImageResource(Resource):
         if not request.files.get('file', None):
             msg = 'The request contains no file'
             # logger.error(msg)
-            return jsonify({"error":msg}),401
+            return {"error":msg},401
         file = request.files['file']
         path = os.path.abspath(os.path.join(
             os.getcwd(), os.pardir, config.UPLOAD_FOLDER, secure_filename(file.filename)))
