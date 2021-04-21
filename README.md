@@ -22,6 +22,7 @@ If docker is configured to run with a local user you can drop sudo from the comm
     `sudo docker-compose up`
     To run with multiple celery workers:  
     `sudo docker-compose up --scale worker=N`
+    where N is the number of workers.
 
 The service is configured to run on:   
     http://0.0.0.0:5000
@@ -32,14 +33,14 @@ or any other IP address from outside docker such as:
 ### Architecture:
 
 The App basically has 3 components:
-1. Flask front end to send / load a local image to the server
-2. Redis key/value store to keep track of jobs, requests.
+1. Flask-restful front end to send / load a local image to the server
+2. Redis which acts as the message broker and the backend message queue which keeps track of the task requests.
 3. Celery to pick up the requests and execute them asynchrnously. 
 
 This enables long running processes to be executed asynchronously and multiple celery workers can be spawned to scale up in case of higher loads.
 
 ### Testing:
 
-For testing one can use pytest.  Testing has not been implemented yet but one can assert on whether the thumbnail_task can be run:
+For testing one can use pytest.  
 
-`docker-compose exec flaskcelerypregen python -m pytest`
+`docker-compose exec flaskcelerypregen python -m pytest tests/test_thumbnail_task.py -k test_generate_thumbnail`
