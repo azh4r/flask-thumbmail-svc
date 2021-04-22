@@ -15,22 +15,23 @@ If docker is configured to run with a local user you can drop sudo from the comm
 2. Change to the directoy where you cloned the app:  
     `cd flask-thumbnail-svc`
 
-2. Create the docker container locally, you must have docker and docker-componse installed already:  
+3. Create the docker container locally, you must have docker and docker-componse installed already:  
     `sudo docker-compose build`
 
-3. Run the container (sudo maybe dropped if your docker is configured to run with a local user):  
-    `sudo docker-compose up`
+4. Run the container (sudo maybe dropped if your docker is configured to run with a local user):  
+    `sudo docker-compose up`  
+
     To run with multiple celery workers:  
     `sudo docker-compose up --scale worker=N`
     where N is the number of workers.
 
-The service is configured to run on:   
-    http://0.0.0.0:5000
+    The service is configured to run on:   
+    http://0.0.0.0:5000  
 
-or any other IP address from outside docker such as:  
-    http://127.0.0.1:5000 
+    or any other IP address from outside docker such as:  
+    http://127.0.0.1:5000  
 
-4. One can use curl to send an image file in the payload of a POST request to REST endpoint : http://127.0.0.1:5000/convert  
+5. One can use curl to send an image file in the payload of a POST request to REST endpoint : http://127.0.0.1:5000/convert  
     Assuming you are in the 'flask-thumbnail-svc' directory execute:  
     `curl -X POST -H 'Content-Type: multipart/form-data' -F "file=@tests/data/painting_image1.jpg" http://127.0.0.1:5000/convert`  
     or  
@@ -39,7 +40,7 @@ or any other IP address from outside docker such as:
     This will return the status of the task and task_id:  
     `{"submission_task_id": "1952114c-ac35-4c5d-8203-5a946f3c71d8", "status": "PENDING"}`
 
-5. You can get the status of the submitted task by sending the id to the convert endpoint:  
+6. You can get the status of the submitted task by sending the id to the convert endpoint:  
     `curl  http://127.0.0.1:5000/convert/<task_id>` where task_id is from the previous post result e.g.: `1952114c-ac35-4c5d-8203-5a946f3c71d8`  
 
     This will give the current status of the task e.g.:  
