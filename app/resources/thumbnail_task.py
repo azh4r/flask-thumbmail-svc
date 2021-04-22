@@ -20,8 +20,7 @@ def generate_thumbnail(filename):
         return "Error, File not found"
     except (UnidentifiedImageError) as ex:
         return "Error, Image type unidentified in file"
-    # time.sleep(30)
-    return True
+    # time.sleep(10)
 
 if __name__ == "__main__":
     generate_thumbnail('input-images/painting_image1.jpg')
