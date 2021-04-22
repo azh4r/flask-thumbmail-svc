@@ -30,10 +30,11 @@ The service is configured to run on:
 or any other IP address from outside docker such as:  
     http://127.0.0.1:5000 
 
-4. One can use curl to send an image file in the payload of a POST request to REST endpoint : http://127.0.0.1:5000/upload  
-    `curl -X POST -H 'Content-Type: multipart/form-data' -F "file=@flask-thumbnail-svc/input-images/painting_image1.jpg" http://127.0.0.1:5000/upload`  
+4. One can use curl to send an image file in the payload of a POST request to REST endpoint : http://127.0.0.1:5000/convert  
+    Assuming you are in the parent directory of 'flask-thumbnail-svc' execute:  
+    `curl -X POST -H 'Content-Type: multipart/form-data' -F "file=@flask-thumbnail-svc/tests/data/painting_image1.jpg" http://127.0.0.1:5000/convert`  
     or  
-    `curl -X POST -F "file=@flask-thumbnail-svc/input-images/painting_image1.jpg" http://127.0.0.1:5000/upload`  
+    `curl -X POST -F "file=@flask-thumbnail-svc/tests/data/painting_image1.jpg" http://127.0.0.1:5000/convert`  
 
 ### Architecture:
 
