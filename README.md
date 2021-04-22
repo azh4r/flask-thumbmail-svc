@@ -31,10 +31,19 @@ or any other IP address from outside docker such as:
     http://127.0.0.1:5000 
 
 4. One can use curl to send an image file in the payload of a POST request to REST endpoint : http://127.0.0.1:5000/convert  
-    Assuming you are in the parent directory of 'flask-thumbnail-svc' execute:  
-    `curl -X POST -H 'Content-Type: multipart/form-data' -F "file=@flask-thumbnail-svc/tests/data/painting_image1.jpg" http://127.0.0.1:5000/convert`  
+    Assuming you are in the 'flask-thumbnail-svc' directory execute:  
+    `curl -X POST -H 'Content-Type: multipart/form-data' -F "file=@tests/data/painting_image1.jpg" http://127.0.0.1:5000/convert`  
     or  
     `curl -X POST -F "file=@flask-thumbnail-svc/tests/data/painting_image1.jpg" http://127.0.0.1:5000/convert`  
+
+    This will return the status of the task and task_id:  
+    `{"submission_task_id": "1952114c-ac35-4c5d-8203-5a946f3c71d8", "status": "PENDING"}`
+
+5. You can get the status of the submitted task by sending the id to the convert endpoint:  
+    `curl  http://127.0.0.1:5000/convert/<task_id>` where task_id is from the previous post result e.g.: `1952114c-ac35-4c5d-8203-5a946f3c71d8`  
+
+    This will give the current status of the task e.g.:  
+    `{"submission_task_id": "1952114c-ac35-4c5d-8203-5a946f3c71d8", "submission_status": "SUCCESS", "submission_result": null}`
 
 ### Architecture:
 
@@ -53,8 +62,8 @@ For Flower dashboard browse to: http://localhost:5556
 
 ### Testing:
 
-For testing one can use pytest.  
+Pytest module is used for unit and integration tests (Pending).  
 1. Change directory to flask-thumbnail-svc:  
     `cd flask-thumbnail-svc`
 2. Execute pytest:  
-    `docker-compose exec flaskcelerypregen python -m pytest tests/test_thumbnail_task.py -k test_generate_thumbnail`
+    `docker-compose exec flaskcelerypregen python -m pytest`
