@@ -3,11 +3,11 @@ from app import config
 import os.path
 from unittest import mock
 
-# happy case
 class test_config:
     UPLOAD_FOLDER = 'flask-celery-pregen/tests/data'
     RESULT_FOLDER = 'flask-celery-pregen/preview-images'
-
++
+# happy case
 @mock.patch('app.resources.thumbnail_task.config',test_config)
 def test_generate_thumbnail(capsys):
     filename = 'painting_image1.jpg'
