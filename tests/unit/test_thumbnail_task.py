@@ -6,12 +6,12 @@ from unittest import mock
 class test_config:
     UPLOAD_FOLDER = 'flask-celery-pregen/tests/data'
     RESULT_FOLDER = 'flask-celery-pregen/preview-images'
-+
+
 # happy case
 @mock.patch('app.resources.thumbnail_task.config',test_config)
 def test_generate_thumbnail(capsys):
     filename = 'painting_image1.jpg'
-    assert generate_thumbnail.run(filename) == None
+    assert generate_thumbnail.run(filename) == True
     output_file = os.path.abspath(os.path.join(os.getcwd(), os.pardir, config.RESULT_FOLDER, filename))
     # print(output_file)
     assert os.path.isfile(output_file) == True
