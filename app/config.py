@@ -1,8 +1,8 @@
-UPLOAD_FOLDER = 'flask-celery-pregen/input-images'
-RESULT_FOLDER = 'flask-celery-pregen/preview-images'
+UPLOAD_FOLDER = 'input-images'
+RESULT_FOLDER = 'preview-images'
 BROKER = 'redis://redis:6379/0'
 BACKEND = 'redis://redis:6379/0'
-
+LOGFILE = 'logs/app.log'
 
 class DevelopmentConfig():
     TESTING = False
