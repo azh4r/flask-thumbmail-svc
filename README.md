@@ -35,7 +35,7 @@ If docker is configured to run with a local user you can drop sudo from the comm
     Assuming you are in the 'flask-thumbnail-svc' directory execute:  
     `curl -X POST -H 'Content-Type: multipart/form-data' -F "file=@tests/data/painting_image1.jpg" http://127.0.0.1:5000/convert`  
     or  
-    `curl -X POST -F "file=@flask-thumbnail-svc/tests/data/painting_image1.jpg" http://127.0.0.1:5000/convert`  
+    `curl -X POST -F "file=@tests/data/painting_image1.jpg" http://127.0.0.1:5000/convert`  
 
     This will return the status of the task and task_id:  
     `{"submission_task_id": "1952114c-ac35-4c5d-8203-5a946f3c71d8", "status": "PENDING"}`
