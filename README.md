@@ -44,7 +44,7 @@ If docker is configured to run with a local user you can drop sudo from the comm
     `curl  http://127.0.0.1:5000/convert/<task_id>` where task_id is from the previous post result e.g.: `1952114c-ac35-4c5d-8203-5a946f3c71d8`  
 
     This will give the current status of the task e.g.:  
-    `{"submission_task_id": "1952114c-ac35-4c5d-8203-5a946f3c71d8", "submission_status": "SUCCESS", "submission_result": null}`
+    `{"submission_task_id": "1952114c-ac35-4c5d-8203-5a946f3c71d8", "submission_status": "SUCCESS", "submission_result": True}`
 
 ### Architecture:
 
@@ -67,4 +67,9 @@ Pytest module is used for unit and integration tests (Pending).
 1. Change directory to flask-thumbnail-svc:  
     `cd flask-thumbnail-svc`
 2. Execute pytest:  
-    `docker-compose exec flaskcelerypregen python -m pytest`
+    `docker-compose exec flaskcelerypregen python -m pytest`  
+
+Currently following tests have been implemented:  
+1. A unit test for running thumbnail_task has been implemented.
+2. An integration test for uploading a file.
+3. A complete end to end test.  
