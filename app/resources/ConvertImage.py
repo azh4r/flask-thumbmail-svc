@@ -36,12 +36,11 @@ class ConvertImageResource(Resource):
             return {"error": "File doesn't exist"}, 401
 
         if file and allowed_file(file.filename):
-            path = os.path.abspath(os.path.join(
-                os.getcwd(), os.pardir, config.UPLOAD_FOLDER, secure_filename(file.filename)))
+            path = os.path.abspath(os.path.join(os.getcwd(), config.UPLOAD_FOLDER, secure_filename(file.filename)))
             filename, file_extension = os.path.splitext(path)
             # Set the uploaded file a uuid name
             filename_uuid = str(uuid.uuid4()) + file_extension
-            path_uuid = os.path.abspath(os.path.join(os.getcwd(), os.pardir, config.UPLOAD_FOLDER, filename_uuid))
+            path_uuid = os.path.abspath(os.path.join(os.getcwd(), config.UPLOAD_FOLDER, filename_uuid))
             file.save(path_uuid)
             # logger.info(f'the file {file.filename} has been successfully saved as {filename_uuid}')
             return task_processing(filename_uuid)

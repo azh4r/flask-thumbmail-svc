@@ -10,10 +10,10 @@ celery = Celery(broker=config.BROKER,backend=config.BACKEND)
 def generate_thumbnail(filename):
     try: 
         # Get the file path to the folder with uploaded file
-        uploaded_file = os.path.abspath(os.path.join(os.getcwd(), os.pardir, config.UPLOAD_FOLDER, filename))
+        uploaded_file = os.path.abspath(os.path.join(os.getcwd(), config.UPLOAD_FOLDER, filename))
         image = Image.open(uploaded_file)
         # Get the file path where the output preview file will be saved to
-        preview_file = os.path.abspath(os.path.join(os.getcwd(), os.pardir, config.RESULT_FOLDER, filename))
+        preview_file = os.path.abspath(os.path.join(os.getcwd(), config.RESULT_FOLDER, filename))
         image.thumbnail((100,100))
         image.save(preview_file)
     except (FileNotFoundError) as ex:
