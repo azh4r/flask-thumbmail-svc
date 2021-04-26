@@ -12,9 +12,9 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 def task_processing(filename):
     task = thumbnail_task.generate_thumbnail.delay(filename)
     async_result = AsyncResult(id=task.task_id, app=thumbnail_task.celery)
-    #processing_result = async_result.get()
     return {'submission_task_id':async_result.task_id,
-            'status': async_result.status}, 202
+            'submission_status': async_result.status,
+            'submission_result': async_result.result}, 202
 
 
 def allowed_file(filename):
@@ -26,13 +26,14 @@ class ConvertImageResource(Resource):
     def post(self):
         if 'file' not in request.files:
             return {"error": "no file part in request"}, 401
+            
         file = request.files['file']
 
         if file.filename == '':
-            return {"error": "No file in request"}
+            return {"error": "No file in request"}, 401
 
         if not request.files.get('file', None):
-            return {"error": "File doesn't exist"}
+            return {"error": "File doesn't exist"}, 401
 
         if file and allowed_file(file.filename):
             path = os.path.abspath(os.path.join(
@@ -44,6 +45,8 @@ class ConvertImageResource(Resource):
             file.save(path_uuid)
             # logger.info(f'the file {file.filename} has been successfully saved as {filename_uuid}')
             return task_processing(filename_uuid)
+        else:
+            return {"error":"Incorrect file type sent in request"}, 401
 
 class ConvertImageStatusResource(Resource):
     # get the status of the image conversion task given the task_id
