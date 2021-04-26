@@ -2,6 +2,7 @@ from app.resources.thumbnail_task import generate_thumbnail
 from app import config
 import os.path
 from unittest import mock
+import time
 
 class test_config:
     UPLOAD_FOLDER = 'flask-celery-pregen/tests/data'
@@ -15,6 +16,8 @@ def test_generate_thumbnail(capsys):
     output_file = os.path.abspath(os.path.join(os.getcwd(), os.pardir, config.RESULT_FOLDER, filename))
     # print(output_file)
     assert os.path.isfile(output_file) == True
+    # remove result preview file
+    os.remove(output_file)
 
 # error when an image file is not sent
 def test_generate_thumbnail_invalid_image():

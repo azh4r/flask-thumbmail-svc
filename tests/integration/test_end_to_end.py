@@ -39,3 +39,5 @@ def test_end_to_end(client):
                         }
 
     assert "test2.jpg" in os.listdir("preview-images")
+    os.remove(os.path.join("input-images/test2.jpg"))
+    os.remove(os.path.join("preview-images/test2.jpg"))

@@ -1,5 +1,6 @@
 import io, os
 from unittest import mock
+from app import config
     
 def mock_task_processing(filename):
     return None, 202
@@ -14,8 +15,11 @@ def test_file_upload(client):
     test_client = client.test_client()
     file_data = dict(file=(io.BytesIO(b'my test binary file'), "test.jpg"),)
     resp = test_client.post("/convert", "Content-type: multipart/form-data", data=file_data)
-    assert "test.jpg" in os.listdir("input-images")
+    upload_folder = os.path.abspath(os.path.join(os.getcwd(), os.pardir, config.UPLOAD_FOLDER))
+    assert "test.jpg" in os.listdir(upload_folder)
     assert "202" in resp.status
+    uploaded_file = os.path.join(upload_folder,"test.jpg")
+    os.remove(uploaded_file)
 
 
 def test_no_file_in_upload(client):
