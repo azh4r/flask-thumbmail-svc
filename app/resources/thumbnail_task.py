@@ -21,6 +21,7 @@ def generate_thumbnail(filename):
     except (UnidentifiedImageError) as ex:
         return "Error, Image type unidentified in file"
     # time.sleep(10)
-
+    return True
+    
 if __name__ == "__main__":
     generate_thumbnail('input-images/painting_image1.jpg')
